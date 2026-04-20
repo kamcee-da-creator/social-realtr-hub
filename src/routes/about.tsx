@@ -3,10 +3,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Social Realtr" },
-      { name: "description", content: "Built by realtors, powered by creatives. Meet the team behind Social Realtr." },
-      { property: "og:title", content: "About — Social Realtr" },
-      { property: "og:description", content: "We started Social Realtr because we saw agents struggling to stay consistent online. So we fixed it." },
+      { title: "About — Vmnf Studios" },
+      { name: "description", content: "Built by realtors, powered by creatives. Meet the team behind Vmnf Studios." },
+      { property: "og:title", content: "About — Vmnf Studios" },
+      { property: "og:description", content: "We started Vmnf Studios because we saw agents struggling to stay consistent online. So we fixed it." },
     ],
   }),
   component: AboutPage,
