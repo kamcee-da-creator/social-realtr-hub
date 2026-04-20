@@ -4,13 +4,13 @@ import { useState } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Social Realtr — Your Social Media, On Autopilot" },
+      { title: "Vmnf Studios — Your Social Media, On Autopilot" },
       {
         name: "description",
         content:
           "Custom posts and videos created, scheduled, and posted to every channel for realtors. Replace your designer, scheduler, and social media manager.",
       },
-      { property: "og:title", content: "Social Realtr — Your Social Media, On Autopilot" },
+      { property: "og:title", content: "Vmnf Studios — Your Social Media, On Autopilot" },
       {
         property: "og:description",
         content: "Done-for-you social media content for top-producing realtors and coaches.",
@@ -81,7 +81,7 @@ const testimonials = [
   {
     name: "Melissa C.",
     role: "Dallas Realtor | Team Leader",
-    quote: "Working with Social Realtr has been an absolute game-changer!",
+    quote: "Working with Vmnf Studios has been an absolute game-changer!",
   },
   {
     name: "Don J.",

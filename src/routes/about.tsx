@@ -32,14 +32,14 @@ function AboutPage() {
       <section className="relative overflow-hidden" style={{ backgroundImage: "var(--gradient-hero)" }}>
         <div className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Built by Realtors. Powered by Creatives.</h1>
-          <p className="mt-6 text-lg text-muted-foreground">We started Social Realtr because we saw agents struggling to stay consistent online. So we fixed it.</p>
+          <p className="mt-6 text-lg text-muted-foreground">We started Vmnf Studios because we saw agents struggling to stay consistent online. So we fixed it.</p>
         </div>
       </section>
 
       <section className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
         <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Our mission is simple: <span className="text-primary">make every realtor unmissable online.</span></h2>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Social Realtr was born when our founders — both top-producing agents — realized that the only thing standing between them and more deals was a consistent online presence. They tried freelancers, agencies, and DIY tools. Nothing worked. So they built the platform they wished existed: a single place where real designers, video editors, and strategists handle everything for you. Today, we serve over 1,000 agents across North America.
+          Vmnf Studios was born when our founders — both top-producing agents — realized that the only thing standing between them and more deals was a consistent online presence. They tried freelancers, agencies, and DIY tools. Nothing worked. So they built the platform they wished existed: a single place where real designers, video editors, and strategists handle everything for you. Today, we serve over 1,000 agents across North America.
         </p>
       </section>
 

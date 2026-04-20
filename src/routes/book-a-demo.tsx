@@ -4,9 +4,9 @@ import { useState } from "react";
 export const Route = createFileRoute("/book-a-demo")({
   head: () => ({
     meta: [
-      { title: "Book a Demo — Social Realtr" },
-      { name: "description", content: "Book a free 15-minute call to see Social Realtr in action. No pressure, just answers." },
-      { property: "og:title", content: "Book a Demo — Social Realtr" },
+      { title: "Book a Demo — Vmnf Studios" },
+      { name: "description", content: "Book a free 15-minute call to see Vmnf Studios in action. No pressure, just answers." },
+      { property: "og:title", content: "Book a Demo — Vmnf Studios" },
       { property: "og:description", content: "Let's talk. Book a free 15-min call." },
     ],
   }),
@@ -20,7 +20,7 @@ function BookDemoPage() {
     <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-2 gap-12 items-start">
       <div>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Let's Talk. Book a Free 15-Min Call.</h1>
-        <p className="mt-5 text-lg text-muted-foreground">No pressure. Just a quick call to see if Social Realtr is the right fit for you.</p>
+        <p className="mt-5 text-lg text-muted-foreground">No pressure. Just a quick call to see if Vmnf Studios is the right fit for you.</p>
 
         <ul className="mt-10 space-y-5">
           {[

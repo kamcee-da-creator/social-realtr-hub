@@ -4,9 +4,9 @@ import { useState } from "react";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Social Realtr" },
+      { title: "Pricing — Vmnf Studios" },
       { name: "description", content: "Simple, transparent pricing for realtors. No contracts, no surprises, cancel anytime." },
-      { property: "og:title", content: "Pricing — Social Realtr" },
+      { property: "og:title", content: "Pricing — Vmnf Studios" },
       { property: "og:description", content: "Three plans built for every stage of your real estate business." },
     ],
   }),

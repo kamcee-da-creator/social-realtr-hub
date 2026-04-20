@@ -4,9 +4,9 @@ import { useState } from "react";
 export const Route = createFileRoute("/examples")({
   head: () => ({
     meta: [
-      { title: "Our Work — Social Realtr" },
+      { title: "Our Work — Vmnf Studios" },
       { name: "description", content: "Browse hundreds of posts and videos created for top-producing realtors across North America." },
-      { property: "og:title", content: "Our Work — Social Realtr" },
+      { property: "og:title", content: "Our Work — Vmnf Studios" },
       { property: "og:description", content: "Real work for real realtors." },
     ],
   }),
