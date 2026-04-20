@@ -30,10 +30,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Social Realtr — Your Social Media, On Autopilot" },
+      { title: "Vmnf Studios — Your Social Media, On Autopilot" },
       { name: "description", content: "Done-for-you social media content for realtors." },
-      { name: "author", content: "Social Realtr" },
-      { property: "og:title", content: "Social Realtr" },
+      { name: "author", content: "Vmnf Studios" },
+      { property: "og:title", content: "Vmnf Studios" },
       { property: "og:description", content: "Your social media, on autopilot." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

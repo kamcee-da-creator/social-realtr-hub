@@ -26,7 +26,7 @@ function Logo() {
       <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
         S
       </div>
-      <span className="font-semibold text-lg tracking-tight">Social Realtr</span>
+      <span className="font-semibold text-lg tracking-tight">Vmnf Studios</span>
     </Link>
   );
 }
@@ -128,7 +128,7 @@ export function SiteShell() {
             </div>
           </div>
           <div className="mt-10 pt-6 border-t border-border text-sm text-muted-foreground text-center">
-            © {new Date().getFullYear()} Social Realtr. All rights reserved.
+            © {new Date().getFullYear()} Vmnf Studios. All rights reserved.
           </div>
         </div>
       </footer>

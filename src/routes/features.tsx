@@ -3,9 +3,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/features")({
   head: () => ({
     meta: [
-      { title: "Features — Social Realtr" },
+      { title: "Features — Vmnf Studios" },
       { name: "description", content: "Every tool a realtor needs to run social media on autopilot — content creation, scheduling, analytics, and more." },
-      { property: "og:title", content: "Features — Social Realtr" },
+      { property: "og:title", content: "Features — Vmnf Studios" },
       { property: "og:description", content: "One platform that replaces your designer, scheduler, and social media manager." },
     ],
   }),
