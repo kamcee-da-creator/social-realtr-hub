@@ -110,11 +110,20 @@ function PricingPage() {
             <div key={p.name} className={`relative rounded-2xl border p-8 bg-card transition hover:-translate-y-1 ${p.popular ? "border-primary" : "border-border"}`} style={p.popular ? { boxShadow: "var(--shadow-glow)" } : undefined}>
               {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">Most Popular</span>}
               <h3 className="text-xl font-semibold">{p.name}</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-5xl font-bold">${price(p.monthly)}</span>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="text-5xl font-bold tracking-tight">${price(p.monthly)}</span>
                 <span className="text-muted-foreground">/mo</span>
+                {annual && (
+                  <span className="text-base text-muted-foreground line-through ml-1">${p.monthly}</span>
+                )}
               </div>
-              {annual && <div className="text-xs text-primary mt-1">Billed annually</div>}
+              <div className="text-xs mt-1 h-4">
+                {annual ? (
+                  <span className="text-primary font-medium">Billed annually · ${price(p.monthly) * 12}/yr</span>
+                ) : (
+                  <span className="text-muted-foreground">Billed monthly</span>
+                )}
+              </div>
               <ul className="mt-6 space-y-3">
                 {p.perks.map((perk) => (
                   <li key={perk} className="flex items-start gap-2 text-sm"><span className="text-primary mt-0.5">✓</span><span>{perk}</span></li>
