@@ -1,5 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useLocalStorage } from "../hooks/use-local-storage";
+
+type DemoDraft = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  company: string;
+  source: string;
+  message: string;
+};
+
+const EMPTY_DRAFT: DemoDraft = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  company: "",
+  source: "Instagram",
+  message: "",
+};
 
 export const Route = createFileRoute("/book-a-demo")({
   head: () => ({
@@ -15,6 +36,9 @@ export const Route = createFileRoute("/book-a-demo")({
 
 function BookDemoPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [draft, setDraft, hydrated] = useLocalStorage<DemoDraft>("vmnf-demo-draft", EMPTY_DRAFT);
+  const update = <K extends keyof DemoDraft>(k: K, v: DemoDraft[K]) =>
+    setDraft({ ...draft, [k]: v });
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-2 gap-12 items-start">
@@ -54,21 +78,40 @@ function BookDemoPage() {
           </div>
         ) : (
           <form
-            onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSubmitted(true);
+              setDraft(EMPTY_DRAFT);
+            }}
             className="space-y-4"
           >
-            <h2 className="text-2xl font-bold">Reserve your slot</h2>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="First Name" name="firstName" required />
-              <Field label="Last Name" name="lastName" required />
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold">Reserve your slot</h2>
+              {hydrated && Object.values(draft).some((v) => v && v !== "Instagram") && (
+                <button
+                  type="button"
+                  onClick={() => setDraft(EMPTY_DRAFT)}
+                  className="text-xs text-muted-foreground hover:text-foreground underline"
+                >
+                  Clear draft
+                </button>
+              )}
             </div>
-            <Field label="Email Address" name="email" type="email" required />
-            <Field label="Phone Number" name="phone" type="tel" required />
-            <Field label="Brokerage / Company Name" name="company" />
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="First Name" name="firstName" required value={draft.firstName} onChange={(v) => update("firstName", v)} />
+              <Field label="Last Name" name="lastName" required value={draft.lastName} onChange={(v) => update("lastName", v)} />
+            </div>
+            <Field label="Email Address" name="email" type="email" required value={draft.email} onChange={(v) => update("email", v)} />
+            <Field label="Phone Number" name="phone" type="tel" required value={draft.phone} onChange={(v) => update("phone", v)} />
+            <Field label="Brokerage / Company Name" name="company" value={draft.company} onChange={(v) => update("company", v)} />
 
             <div>
               <label className="block text-sm font-medium mb-1.5">How did you hear about us?</label>
-              <select className="w-full px-4 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none transition">
+              <select
+                value={draft.source}
+                onChange={(e) => update("source", e.target.value)}
+                className="w-full px-4 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none transition"
+              >
                 <option>Instagram</option>
                 <option>Facebook</option>
                 <option>Google Search</option>
@@ -80,8 +123,15 @@ function BookDemoPage() {
 
             <div>
               <label className="block text-sm font-medium mb-1.5">A short message or question</label>
-              <textarea rows={4} className="w-full px-4 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none transition resize-none" />
+              <textarea
+                rows={4}
+                value={draft.message}
+                onChange={(e) => update("message", e.target.value)}
+                className="w-full px-4 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none transition resize-none"
+              />
             </div>
+
+            <p className="text-xs text-muted-foreground">✓ Your progress is saved automatically</p>
 
             <button type="submit" className="w-full px-6 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold hover:opacity-90 transition" style={{ boxShadow: "var(--shadow-glow)" }}>
               Book My Demo Call
@@ -97,7 +147,21 @@ function BookDemoPage() {
   );
 }
 
-function Field({ label, name, type = "text", required }: { label: string; name: string; type?: string; required?: boolean }) {
+function Field({
+  label,
+  name,
+  type = "text",
+  required,
+  value,
+  onChange,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+  value: string;
+  onChange: (v: string) => void;
+}) {
   return (
     <div>
       <label htmlFor={name} className="block text-sm font-medium mb-1.5">{label}{required && <span className="text-primary"> *</span>}</label>
@@ -106,6 +170,8 @@ function Field({ label, name, type = "text", required }: { label: string; name: 
         name={name}
         type={type}
         required={required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         className="w-full px-4 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none transition"
       />
     </div>
