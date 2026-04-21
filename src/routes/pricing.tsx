@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { useLocalStorage } from "../hooks/use-local-storage";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -54,7 +55,8 @@ const FAQS = [
 ];
 
 function PricingPage() {
-  const [annual, setAnnual] = useState(false);
+  const [annual, setAnnual] = useLocalStorage<boolean>("vmnf-billing-annual", false);
+  const [selectedPlan, setSelectedPlan] = useLocalStorage<string | null>("vmnf-selected-plan", null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const price = (m: number) => (annual ? Math.round(m * 0.8) : m);
@@ -106,9 +108,12 @@ function PricingPage() {
 
       <section className="max-w-7xl mx-auto px-6 pb-16">
         <div className="grid md:grid-cols-3 gap-6">
-          {PLANS.map((p) => (
-            <div key={p.name} className={`relative rounded-2xl border p-8 bg-card transition hover:-translate-y-1 ${p.popular ? "border-primary" : "border-border"}`} style={p.popular ? { boxShadow: "var(--shadow-glow)" } : undefined}>
+          {PLANS.map((p) => {
+            const isSelected = selectedPlan === p.name;
+            return (
+            <div key={p.name} className={`relative rounded-2xl border p-8 bg-card transition hover:-translate-y-1 ${isSelected ? "border-primary ring-2 ring-primary/40" : p.popular ? "border-primary" : "border-border"}`} style={p.popular || isSelected ? { boxShadow: "var(--shadow-glow)" } : undefined}>
               {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">Most Popular</span>}
+              {isSelected && <span className="absolute top-3 right-3 text-xs font-semibold text-primary">✓ Selected</span>}
               <h3 className="text-xl font-semibold">{p.name}</h3>
               <div className="mt-4 flex items-baseline gap-2">
                 <span className="text-5xl font-bold tracking-tight">${price(p.monthly)}</span>
@@ -129,9 +134,15 @@ function PricingPage() {
                   <li key={perk} className="flex items-start gap-2 text-sm"><span className="text-primary mt-0.5">✓</span><span>{perk}</span></li>
                 ))}
               </ul>
-              <button className={`mt-8 w-full py-3 rounded-lg font-medium transition ${p.popular ? "bg-primary text-primary-foreground hover:opacity-90" : "border border-border hover:border-foreground/40"}`}>View Full Details</button>
+              <button
+                onClick={() => setSelectedPlan(isSelected ? null : p.name)}
+                className={`mt-8 w-full py-3 rounded-lg font-medium transition ${isSelected || p.popular ? "bg-primary text-primary-foreground hover:opacity-90" : "border border-border hover:border-foreground/40"}`}
+              >
+                {isSelected ? "✓ Selected" : "Select Plan"}
+              </button>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

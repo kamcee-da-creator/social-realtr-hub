@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useLocalStorage } from "../hooks/use-local-storage";
 
 export const Route = createFileRoute("/examples")({
   head: () => ({
@@ -26,6 +27,15 @@ const TRANSFORMATIONS = [
 function ExamplesPage() {
   const [tab, setTab] = useState("All");
   const [count, setCount] = useState(12);
+  const [favorites, setFavorites] = useLocalStorage<number[]>("vmnf-favorite-posts", []);
+  const [showOnlyFavs, setShowOnlyFavs] = useState(false);
+
+  const toggleFav = (id: number) =>
+    setFavorites(favorites.includes(id) ? favorites.filter((x) => x !== id) : [...favorites, id]);
+
+  const visibleIds = Array.from({ length: count }, (_, i) => i).filter((i) =>
+    showOnlyFavs ? favorites.includes(i) : true,
+  );
 
   return (
     <div>
@@ -43,21 +53,52 @@ function ExamplesPage() {
           ))}
         </div>
 
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <button
+            onClick={() => setShowOnlyFavs((v) => !v)}
+            className={`px-4 py-2 rounded-full text-sm border transition inline-flex items-center gap-2 ${showOnlyFavs ? "bg-primary text-primary-foreground border-primary" : "border-border text-muted-foreground hover:text-foreground"}`}
+          >
+            <span>{showOnlyFavs ? "★" : "☆"}</span>
+            {showOnlyFavs ? "Showing favorites" : "Show favorites only"}
+            {favorites.length > 0 && (
+              <span className={`text-xs px-1.5 py-0.5 rounded-full ${showOnlyFavs ? "bg-primary-foreground/20" : "bg-primary/15 text-primary"}`}>
+                {favorites.length}
+              </span>
+            )}
+          </button>
+        </div>
+
         <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {Array.from({ length: count }).map((_, i) => (
+          {visibleIds.length === 0 ? (
+            <div className="col-span-full text-center text-muted-foreground py-16">
+              No favorites yet. Tap the ☆ on any post to save it here.
+            </div>
+          ) : visibleIds.map((i) => {
+            const isFav = favorites.includes(i);
+            return (
             <div key={i} className="aspect-[4/5] rounded-xl border border-border bg-gradient-to-br from-secondary to-card relative overflow-hidden group cursor-pointer">
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition" />
+              <button
+                onClick={(e) => { e.stopPropagation(); toggleFav(i); }}
+                aria-label={isFav ? "Remove favorite" : "Add favorite"}
+                className={`absolute top-2 right-2 h-8 w-8 rounded-full flex items-center justify-center backdrop-blur-md transition ${isFav ? "bg-primary text-primary-foreground" : "bg-black/40 text-white hover:bg-black/60"}`}
+              >
+                {isFav ? "★" : "☆"}
+              </button>
               <div className="absolute bottom-3 left-3 right-3">
                 <div className="text-xs text-primary font-medium">{tab === "All" ? TABS[(i % (TABS.length - 1)) + 1] : tab}</div>
                 <div className="text-sm font-semibold">Post #{i + 1}</div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
-        <div className="mt-10 text-center">
-          <button onClick={() => setCount((c) => c + 8)} className="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:opacity-90 transition" style={{ boxShadow: "var(--shadow-glow)" }}>Load More</button>
-        </div>
+        {!showOnlyFavs && (
+          <div className="mt-10 text-center">
+            <button onClick={() => setCount((c) => c + 8)} className="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:opacity-90 transition" style={{ boxShadow: "var(--shadow-glow)" }}>Load More</button>
+          </div>
+        )}
       </section>
 
       <section className="bg-card/30 border-y border-border">

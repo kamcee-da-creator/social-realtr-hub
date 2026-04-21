@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useLocalStorage } from "../hooks/use-local-storage";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -128,9 +129,30 @@ function Index() {
   const [activeTab, setActiveTab] = useState(contentTabs[0]);
   const [activeFeature, setActiveFeature] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [bannerDismissed, setBannerDismissed, bannerHydrated] = useLocalStorage<boolean>(
+    "vmnf-banner-trial-dismissed",
+    false,
+  );
 
   return (
     <div className="text-foreground">
+
+      {bannerHydrated && !bannerDismissed && (
+        <div className="bg-primary text-primary-foreground">
+          <div className="max-w-7xl mx-auto px-6 py-2.5 flex items-center justify-between gap-4 text-sm">
+            <p className="font-medium">
+              🎉 Limited-time: Start your 14-day free trial — no credit card required.
+            </p>
+            <button
+              onClick={() => setBannerDismissed(true)}
+              aria-label="Dismiss banner"
+              className="h-7 w-7 flex items-center justify-center rounded-full hover:bg-primary-foreground/20 transition flex-shrink-0"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Hero */}
       <section
